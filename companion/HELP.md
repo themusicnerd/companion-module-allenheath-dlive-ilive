@@ -12,12 +12,40 @@ This module provides comprehensive control for Allen & Heath dLive and iLive dig
 1. **IP Address**: Enter the IP address of your dLive Surface or MixRack
 2. **Console Type**: Select either "dLive" or "iLive" to enable appropriate features
 3. **Network Ports**: 
-   - **MIDI Port**: Configurable (default: 51328) - Used for basic mixer commands
-   - **TCP Port**: Configurable (default: 51321) - Used for dLive advanced features only
+   - **MIDI Port**: Configurable (default: 51325) - Used for basic mixer commands
+   - **TCP Port**: Configurable (default: 51321) - Used for dLive advanced features and optional iLive AHNet meters
+   - **iLive AHNet Console UDP Port**: Configurable (default: 51324) - Used only when iLive AHNet meters are enabled
+   - **iLive AHNet Local UDP Port**: Configurable (default: 51326) - Local port Companion uses to receive AHNet meter packets
 4. **MIDI Channel Configuration**:
    - **MIDI Channel for dLive System (N)**: Base MIDI channel for dLive system control (default: 0)
    - **Note**: dLive uses 5 consecutive MIDI channels (N through N+4) for different control types
 5. **Port Configuration**: Both MIDI and TCP ports can be customized in the module configuration
+
+## iLive AHNet Meters
+
+iLive can optionally subscribe to AHNet meter data in addition to the normal MIDI-over-TCP control connection.
+
+Enable **iLive AHNet meters** in the module config to add meter variables and the **iLive AHNet Meter** feedback.
+
+The first AHNet meter implementation includes:
+
+- Input Post PreAmp/Trim level
+- Input Post Limiter/De-Ess level
+- Input Gate gain reduction
+- Input Compressor gain reduction
+- Input Limiter gain reduction
+- Aux 1-6 output meters
+- Main Left and Main Right output meters
+- Input channel names for AHNet-enabled input meter and fader presets
+- Detected mix configuration variables for groups, FX sends, auxes, matrices, and main output
+
+The current iLive meter mapping is based on live testing and should be treated as an initial implementation.
+
+Meter variables include an approximate dB value and a raw AHNet value.
+
+The raw values are provided because final dB calibration is still being refined.
+
+The `ilive_mix_config` variable reports the detected mix engine layout when AHNet answers the channel name manager lookups.
 
 ## Available Actions
 
