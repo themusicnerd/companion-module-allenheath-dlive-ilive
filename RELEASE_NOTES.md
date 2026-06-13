@@ -1,10 +1,10 @@
-# Test Package Notes
+# Release Notes
 
-## allenheath-dlive-ilive 2.0.3 AHNet tester build
+## allenheath-dlive-ilive 2.0.3 AHNet support
 
-This is an experimental tester package for Allen & Heath iLive AHNet meter support in the dLive/iLive Companion module.
+This release adds tested Allen & Heath iLive AHNet meter support to the dLive/iLive Companion module.
 
-Package:
+Package artifact:
 
 ```text
 allenheath-dlive-ilive-2.0.3.tgz
@@ -32,18 +32,19 @@ allenheath-dlive-ilive-2.0.3.tgz
 - Detected iLive mix configuration variables.
 - Configurable AHNet graphical meter refresh and dB text refresh intervals.
 - Avoids recurring UDP keepalives to the iDR setup port after the initial AHNet UDP hello.
+- iLive AHNet mix-layout detection now stays internal instead of writing detected counts back into manual dLive mix-count config fields.
+- Config fields include tooltips for connection, AHNet, fader fade, and dLive mix-layout settings.
 
 ## Known Limitations
 
 - Input level meter dB scaling is approximate.
 - Input gate, compressor, and limiter gain-reduction scaling is based on live Channel 1 tests: raw values map closely to `(65535 - raw) / 256` dB, with raw `13/14` meaning zero reduction. Graphical GR meters use a 0-30 dB scale.
-- AHNet protocol mapping is based on live reverse-engineering and needs more console/firmware validation.
 - Companion image feedback rendering can feel slower than iLive Editor native meters.
 - iLive Editor and Companion can both connect, but AHNet session ids and UDP source ports are dynamic.
 
 ## Validation
 
-The local tester package was built with:
+The package was built with:
 
 ```bash
 node --check ahnet-meters.js && node --check index.js

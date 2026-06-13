@@ -27,7 +27,7 @@ iLive can optionally subscribe to AHNet meter data in addition to the normal MID
 
 Enable **iLive AHNet meters** in the module config to add meter variables and the **iLive AHNet Meter** feedback.
 
-The first AHNet meter implementation includes:
+iLive AHNet meter support includes:
 
 - Input Post PreAmp/Trim level
 - Input Post Gate/PEQ level
@@ -40,13 +40,13 @@ The first AHNet meter implementation includes:
 - Aux 1-6 output meters, indexed from the configured iLive mix layout
 - Main Left and Main Right output meters, indexed from the configured iLive mix layout
 - Input channel names for AHNet-enabled input meter and fader presets
-- Detected mix configuration variables for groups, FX sends, auxes, matrices, and main output
+- Automatic mix configuration detection for groups, FX sends, auxes, matrices, and main output
 
-The current iLive meter mapping is based on live testing plus constants extracted from iLive Editor 1.95, and should be treated as an initial implementation.
+The iLive meter mapping is based on live iLive testing plus constants extracted from iLive Editor 1.95.
 
 Meter variables include an approximate dB value and a raw AHNet value.
 
-The raw values are provided because final dB calibration is still being refined.
+Raw values are provided for advanced troubleshooting.
 
 The `ilive_mix_config` variable reports the detected mix engine layout when AHNet answers the channel name manager lookups.
 
