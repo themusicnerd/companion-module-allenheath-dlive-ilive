@@ -34,6 +34,7 @@ allenheath-dlive-ilive-2.0.3.tgz
 - Avoids recurring UDP keepalives to the iDR setup port after the initial AHNet UDP hello.
 - iLive AHNet mix-layout detection now stays internal instead of writing detected counts back into manual dLive mix-count config fields.
 - Config fields include tooltips for connection, AHNet, fader fade, and dLive mix-layout settings.
+- Advanced settings hide fixed protocol ports, meter/fade timing, dLive MIDI channel, and dLive manual mix-layout fields from normal setup.
 
 ## Known Limitations
 

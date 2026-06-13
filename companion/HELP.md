@@ -13,9 +13,10 @@ This module provides comprehensive control for Allen & Heath dLive and iLive dig
 2. **Console Type**: Select either "dLive" or "iLive" to enable appropriate features
 3. **Network Ports**: 
    - **MIDI Port**: Configurable (default: 51325) - Used for basic mixer commands
-   - **TCP Port**: Configurable (default: 51321) - Used for dLive advanced features and optional iLive AHNet meters
-   - **iLive AHNet Console UDP Port**: Configurable (default: 51324) - Used only when iLive AHNet meters are enabled
-   - **iLive AHNet Local UDP Port**: Configurable (default: 51326) - Local port Companion uses to receive AHNet meter packets
+   - **TCP Port**: Configurable (default: 51321) - Used for dLive advanced features and iLive AHNet sessions
+   - **Advanced Settings**: Reveals fixed protocol ports, meter timing, fade timing, and dLive MIDI channel settings
+   - **iLive AHNet Console UDP Port**: Advanced setting (default: 51324) - Used only when iLive AHNet meters are enabled
+   - **iLive AHNet Local UDP Port**: Advanced setting (default: 51326) - Local port Companion uses to receive AHNet meter packets
 4. **MIDI Channel Configuration**:
    - **MIDI Channel for dLive System (N)**: Base MIDI channel for dLive system control (default: 0)
    - **Note**: dLive uses 5 consecutive MIDI channels (N through N+4) for different control types
@@ -49,6 +50,8 @@ Meter variables include an approximate dB value and a raw AHNet value.
 Raw values are provided for advanced troubleshooting.
 
 The `ilive_mix_config` variable reports the detected mix engine layout when AHNet answers the channel name manager lookups.
+
+dLive manual mix-count fields are hidden behind **Show advanced settings** and **Show advanced mix layout**. iLive AHNet detects the iLive mix layout automatically, so these fields are not needed for normal iLive setup.
 
 ## Available Actions
 
