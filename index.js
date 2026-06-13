@@ -194,7 +194,10 @@ class ModuleInstance extends InstanceBase {
 		const variables = []
 		const inputMeters = [
 			{ id: 'preamp', name: 'Post PreAmp/Trim level' },
+			{ id: 'post_peq', name: 'Post Gate/PEQ level' },
+			{ id: 'post_comp', name: 'Post Compressor level' },
 			{ id: 'limiter_deess', name: 'Post Limiter/De-Ess level' },
+			{ id: 'post_delay', name: 'Post Delay level' },
 			{ id: 'gate_gr', name: 'Gate gain reduction' },
 			{ id: 'comp_gr', name: 'Compressor gain reduction' },
 			{ id: 'limiter_gr', name: 'Limiter gain reduction' },
@@ -317,7 +320,10 @@ class ModuleInstance extends InstanceBase {
 						default: 'input_preamp',
 						choices: [
 							{ id: 'input_preamp', label: 'Input Post PreAmp/Trim' },
+							{ id: 'input_post_peq', label: 'Input Post Gate/PEQ' },
+							{ id: 'input_post_comp', label: 'Input Post Compressor' },
 							{ id: 'input_limiter_deess', label: 'Input Post Limiter/De-Ess' },
+							{ id: 'input_post_delay', label: 'Input Post Delay' },
 							{ id: 'input_gate_gr', label: 'Input Gate GR' },
 							{ id: 'input_comp_gr', label: 'Input Compressor GR' },
 							{ id: 'input_limiter_gr', label: 'Input Limiter GR' },
@@ -393,7 +399,10 @@ class ModuleInstance extends InstanceBase {
 						default: 'input_preamp',
 						choices: [
 							{ id: 'input_preamp', label: 'Input Post PreAmp/Trim' },
+							{ id: 'input_post_peq', label: 'Input Post Gate/PEQ' },
+							{ id: 'input_post_comp', label: 'Input Post Compressor' },
 							{ id: 'input_limiter_deess', label: 'Input Post Limiter/De-Ess' },
+							{ id: 'input_post_delay', label: 'Input Post Delay' },
 							{ id: 'input_gate_gr', label: 'Input Gate GR' },
 							{ id: 'input_comp_gr', label: 'Input Compressor GR' },
 							{ id: 'input_limiter_gr', label: 'Input Limiter GR' },
@@ -570,27 +579,75 @@ class ModuleInstance extends InstanceBase {
 	getAhnetMeterDefinition(meter, options) {
 		const channel = Math.min(Math.max(parseInt(options.channel || 1), 1), 64)
 		const aux = Math.min(Math.max(parseInt(options.aux || 1), 1), 6)
+		const auxMixOutput = this.getAhnetMixOutputIndex('monoAux', aux)
+		const mainLeftMixOutput = this.getAhnetMainMixOutputIndex('left')
+		const mainRightMixOutput = this.getAhnetMainMixOutputIndex('right')
 
 		switch (meter) {
 			case 'input_preamp':
 				return { bank: 0, index: channel - 1 }
+			case 'input_post_peq':
+				return { bank: 0, index: channel + 63 }
+			case 'input_post_comp':
+				return { bank: 1, index: channel - 1 }
 			case 'input_limiter_deess':
-				return { bank: 3, index: channel - 1 }
+				return { bank: 1, index: channel + 63 }
+			case 'input_post_delay':
+				return { bank: 2, index: channel - 1 }
 			case 'input_gate_gr':
-				return { bank: 4, index: channel - 1, dynamics: true, dynamicsRange: 60, dynamicsSpan: 13000, dynamicsBaseline: 43985 }
+				return { bank: 4, index: channel - 1, dynamics: true, dynamicsRange: 30 }
 			case 'input_comp_gr':
-				return { bank: 4, index: channel + 63, dynamics: true, dynamicsRange: 30, dynamicsSpan: 7750 }
+				return { bank: 4, index: channel + 63, dynamics: true, dynamicsRange: 30 }
 			case 'input_limiter_gr':
-				return { bank: 5, index: channel - 1, dynamics: true, dynamicsRange: 24, dynamicsSpan: 6500 }
+				return { bank: 5, index: channel - 1, dynamics: true, dynamicsRange: 30 }
 			case 'aux':
-				return { bank: 6, index: aux + 13 }
+				return { bank: 6, index: auxMixOutput ?? aux + 13 }
 			case 'main_left':
-				return { bank: 6, index: 24 }
+				return { bank: 6, index: mainLeftMixOutput ?? 24 }
 			case 'main_right':
-				return { bank: 6, index: 25 }
+				return { bank: 6, index: mainRightMixOutput ?? 25 }
 			default:
 				return undefined
 		}
+	}
+
+	getAhnetMixOutputStart(type) {
+		const requiredKeys = ['monoGroup', 'stereoGroup', 'monoAux', 'stereoAux']
+		const hasDetectedLayout = requiredKeys.every((key) => Object.prototype.hasOwnProperty.call(this.ahnetMixConfig || {}, key))
+		if (!hasDetectedLayout) return undefined
+
+		let offset = 0
+		const monoGroup = this.getAhnetMixConfigValue('monoGroup')
+		const stereoGroup = this.getAhnetMixConfigValue('stereoGroup')
+		const monoAux = this.getAhnetMixConfigValue('monoAux')
+		const stereoAux = this.getAhnetMixConfigValue('stereoAux')
+		const configuredMixOutputs = monoGroup + stereoGroup * 2 + monoAux + stereoAux * 2
+		if (configuredMixOutputs <= 0) return undefined
+
+		if (type == 'monoGroup') return offset
+		offset += monoGroup
+		if (type == 'stereoGroup') return offset
+		offset += stereoGroup * 2
+		if (type == 'monoAux') return offset
+		offset += monoAux
+		if (type == 'stereoAux') return offset
+		offset += stereoAux * 2
+		if (type == 'main') return offset
+		return undefined
+	}
+
+	getAhnetMixOutputIndex(type, number) {
+		const start = this.getAhnetMixOutputStart(type)
+		const index = Math.max(parseInt(number || 1), 1) - 1
+		if (!Number.isFinite(start) || index < 0) return undefined
+		if (type == 'stereoGroup' || type == 'stereoAux') return start + index * 2
+		return start + index
+	}
+
+	getAhnetMainMixOutputIndex(side) {
+		const start = this.getAhnetMixOutputStart('main')
+		if (!Number.isFinite(start)) return undefined
+		return start + (side == 'right' ? 1 : 0)
 	}
 
 	getAhnetRawMeterValue(bank, index) {
@@ -614,27 +671,24 @@ class ModuleInstance extends InstanceBase {
 		if (!isDynamics && value <= 32) return 100
 		if (isDynamics && value <= 32) return 0
 		if (isDynamics) {
-			const key = `${definition.bank}:${definition.index}`
-			if (!this.ahnetDynamicsBaselines) this.ahnetDynamicsBaselines = new Map()
-			if (Number.isFinite(definition.dynamicsBaseline)) {
-				this.ahnetDynamicsBaselines.set(key, definition.dynamicsBaseline)
-			} else if (!this.ahnetDynamicsBaselines.has(key)) {
-				this.ahnetDynamicsBaselines.set(key, value)
-				return 0
-			}
-			const baseline = this.ahnetDynamicsBaselines.get(key)
-			const span = Math.max(definition.dynamicsSpan ?? 13000, 1)
-			const percent = (Math.abs(value - baseline) / span) * 100
+			const range = Math.max(definition.dynamicsRange ?? 30, 1)
+			const percent = (this.getAhnetDynamicsReductionDb(value) / range) * 100
 			return Math.min(Math.max(percent, 0), 100)
 		}
 		return Math.min(Math.max(((value - 43985) / (65535 - 43985)) * 100, 0), 100)
+	}
+
+	getAhnetDynamicsReductionDb(raw) {
+		const value = parseInt(raw)
+		if (!Number.isFinite(value) || value <= 32) return 0
+		return Math.max((65535 - value) / 256, 0)
 	}
 
 	formatAhnetMeter(raw, dynamics = false, dynamicsRange = 30) {
 		const definition = typeof dynamics === 'object' ? dynamics : { dynamics, dynamicsRange }
 		const percent = this.normalizeAhnetMeter(raw, definition)
 		if (definition.dynamics) {
-			const reduction = (percent / 100) * (definition.dynamicsRange ?? dynamicsRange)
+			const reduction = this.getAhnetDynamicsReductionDb(raw)
 			return reduction <= 0.05 ? '0.0 dB' : `-${reduction.toFixed(1)} dB`
 		}
 
@@ -673,10 +727,13 @@ class ModuleInstance extends InstanceBase {
 		const values = {}
 		const inputMeters = [
 			{ id: 'preamp', bank: 0, index: (channel) => channel - 1 },
-			{ id: 'limiter_deess', bank: 3, index: (channel) => channel - 1 },
-			{ id: 'gate_gr', bank: 4, index: (channel) => channel - 1, dynamics: true, dynamicsRange: 60, dynamicsSpan: 13000, dynamicsBaseline: 43985 },
-			{ id: 'comp_gr', bank: 4, index: (channel) => channel + 63, dynamics: true, dynamicsRange: 30, dynamicsSpan: 7750 },
-			{ id: 'limiter_gr', bank: 5, index: (channel) => channel - 1, dynamics: true, dynamicsRange: 24, dynamicsSpan: 6500 },
+			{ id: 'post_peq', bank: 0, index: (channel) => channel + 63 },
+			{ id: 'post_comp', bank: 1, index: (channel) => channel - 1 },
+			{ id: 'limiter_deess', bank: 1, index: (channel) => channel + 63 },
+			{ id: 'post_delay', bank: 2, index: (channel) => channel - 1 },
+			{ id: 'gate_gr', bank: 4, index: (channel) => channel - 1, dynamics: true, dynamicsRange: 30 },
+			{ id: 'comp_gr', bank: 4, index: (channel) => channel + 63, dynamics: true, dynamicsRange: 30 },
+			{ id: 'limiter_gr', bank: 5, index: (channel) => channel - 1, dynamics: true, dynamicsRange: 30 },
 		]
 
 		const activeInputChannels = new Set(this.ahnetActiveSubscriptions?.nameEntries?.input || [])
@@ -690,13 +747,16 @@ class ModuleInstance extends InstanceBase {
 		}
 
 		for (let aux = 1; aux <= 6; aux++) {
-			const raw = this.getAhnetRawMeterValue(6, aux + 13)
+			const definition = this.getAhnetMeterDefinition('aux', { aux })
+			const raw = this.getAhnetRawMeterValue(definition.bank, definition.index)
 			values[`ilive_aux_${aux}_meter`] = this.formatAhnetMeter(raw)
 			values[`ilive_aux_${aux}_meter_raw`] = raw
 		}
 
-		const left = this.getAhnetRawMeterValue(6, 24)
-		const right = this.getAhnetRawMeterValue(6, 25)
+		const leftDefinition = this.getAhnetMeterDefinition('main_left', {})
+		const rightDefinition = this.getAhnetMeterDefinition('main_right', {})
+		const left = this.getAhnetRawMeterValue(leftDefinition.bank, leftDefinition.index)
+		const right = this.getAhnetRawMeterValue(rightDefinition.bank, rightDefinition.index)
 		values.ilive_main_left_meter = this.formatAhnetMeter(left)
 		values.ilive_main_left_meter_raw = left
 		values.ilive_main_right_meter = this.formatAhnetMeter(right)
@@ -927,7 +987,10 @@ class ModuleInstance extends InstanceBase {
 		const presets = []
 		const inputMeters = [
 			{ meter: 'input_preamp', id: 'preamp', label: 'PreAmp', category: 'iLive AHNet Input Meters' },
+			{ meter: 'input_post_peq', id: 'post_peq', label: 'Post PEQ', category: 'iLive AHNet Input Meters' },
+			{ meter: 'input_post_comp', id: 'post_comp', label: 'Post Comp', category: 'iLive AHNet Input Meters' },
 			{ meter: 'input_limiter_deess', id: 'limiter_deess', label: 'Post Lim', category: 'iLive AHNet Input Meters' },
+			{ meter: 'input_post_delay', id: 'post_delay', label: 'Post Delay', category: 'iLive AHNet Input Meters' },
 			{ meter: 'input_gate_gr', id: 'gate_gr', label: 'Gate GR', category: 'iLive AHNet Dynamics Meters' },
 			{ meter: 'input_comp_gr', id: 'comp_gr', label: 'Comp GR', category: 'iLive AHNet Dynamics Meters' },
 			{ meter: 'input_limiter_gr', id: 'limiter_gr', label: 'Limit GR', category: 'iLive AHNet Dynamics Meters' },

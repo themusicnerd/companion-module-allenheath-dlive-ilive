@@ -30,16 +30,19 @@ Enable **iLive AHNet meters** in the module config to add meter variables and th
 The first AHNet meter implementation includes:
 
 - Input Post PreAmp/Trim level
+- Input Post Gate/PEQ level
+- Input Post Compressor level
 - Input Post Limiter/De-Ess level
+- Input Post Delay level
 - Input Gate gain reduction
 - Input Compressor gain reduction
 - Input Limiter gain reduction
-- Aux 1-6 output meters
-- Main Left and Main Right output meters
+- Aux 1-6 output meters, indexed from the configured iLive mix layout
+- Main Left and Main Right output meters, indexed from the configured iLive mix layout
 - Input channel names for AHNet-enabled input meter and fader presets
 - Detected mix configuration variables for groups, FX sends, auxes, matrices, and main output
 
-The current iLive meter mapping is based on live testing and should be treated as an initial implementation.
+The current iLive meter mapping is based on live testing plus constants extracted from iLive Editor 1.95, and should be treated as an initial implementation.
 
 Meter variables include an approximate dB value and a raw AHNet value.
 

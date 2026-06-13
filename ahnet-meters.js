@@ -310,7 +310,6 @@ class AhnetMeterClient {
 	startKeepalive() {
 		if (this.keepaliveTimer) return
 		this.keepaliveTimer = setInterval(() => {
-			this.sendUdp(keepalive(), this.options.udpPort)
 			if (this.udpPeerPort) this.sendUdp(keepalive(), this.udpPeerPort)
 		}, 1000)
 	}
