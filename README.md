@@ -5,11 +5,13 @@ See [HELP.md](HELP.md) and [LICENSE](LICENSE) for more information about this mo
 This module for the Allen & Heath dLive and iLive can control parameters of the console
 via MIDI, TCP, and iLive AHNet commands over IP.
 
-Current Version 2.0.3
+Current Version 2.0.4
 
 ## iLive AHNet support
 
 iLive AHNet support adds live input/output meters, gain-reduction meters, input names, and input colours.
+
+AHNet may also be usable on dLive systems, but dLive AHNet meter support has not been tested.
 
 iLive AHNet support includes:
 

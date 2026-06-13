@@ -1,5 +1,37 @@
 # Release Notes
 
+## allenheath-dlive-ilive 2.0.4 iLive AHNet polish
+
+This local development build continues the tested iLive AHNet work and cleans up setup wording for normal iLive use.
+
+Package artifact:
+
+```text
+allenheath-dlive-ilive-2.0.4.tgz
+```
+
+## Changed
+
+- Renamed the shared TCP configuration field to **TCP Port** with a clearer tooltip. dLive advanced control and iLive AHNet sessions both normally use TCP `51321`.
+- Removed the experimental/tester wording from the README, Help, and release notes.
+- Added README development history for Andrew Broughton, Matt Andrewartha, and Adrian Davis.
+- Restored Andrew Broughton in `companion/manifest.json` maintainers.
+- Documented iLive firmware 1.94+ as confirmed working.
+- Documented that AHNet may work on dLive, but dLive AHNet meter support is untested.
+- Added config tooltips for connection, AHNet, fader fade, MIDI channel, and mix-layout fields.
+- Kept iLive AHNet mix-layout detection internal instead of writing detected counts back into manual dLive mix-count config fields.
+- Removed the attempted advanced visibility switches after local Companion testing showed the config UI did not hide the mix-layout fields reliably.
+
+## Validation
+
+The local 2.0.4 package should be built with:
+
+```bash
+node --check ahnet-meters.js && node --check index.js
+npx companion-module-check
+node node_modules/@companion-module/tools/scripts/build-connection.js --dev
+```
+
 ## allenheath-dlive-ilive 2.0.3 AHNet support
 
 This release adds tested Allen & Heath iLive AHNet meter support to the dLive/iLive Companion module.
@@ -34,7 +66,6 @@ allenheath-dlive-ilive-2.0.3.tgz
 - Avoids recurring UDP keepalives to the iDR setup port after the initial AHNet UDP hello.
 - iLive AHNet mix-layout detection now stays internal instead of writing detected counts back into manual dLive mix-count config fields.
 - Config fields include tooltips for connection, AHNet, fader fade, and dLive mix-layout settings.
-- Advanced settings hide fixed protocol ports, meter/fade timing, dLive MIDI channel, and dLive manual mix-layout fields from normal setup.
 
 ## Known Limitations
 

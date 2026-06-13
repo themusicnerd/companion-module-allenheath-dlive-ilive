@@ -1613,14 +1613,6 @@ class ModuleInstance extends InstanceBase {
 			},
 			{
 				type: 'checkbox',
-				id: 'showAdvancedSettings',
-				label: 'Show advanced settings',
-				tooltip: 'Show fixed protocol ports, meter refresh timing, fade timing, and dLive MIDI channel settings.',
-				width: 6,
-				default: false,
-			},
-			{
-				type: 'checkbox',
 				id: 'enableAhnetMeters',
 				label: 'Enable iLive AHNet meters',
 				tooltip: 'Enable live iLive input/output meters, gain reduction meters, channel names, and channel colours via AHNet.',
@@ -1637,7 +1629,7 @@ class ModuleInstance extends InstanceBase {
 				default: 51324,
 				min: 1,
 				max: 65535,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true',
 			},
 			{
 				type: 'number',
@@ -1648,7 +1640,7 @@ class ModuleInstance extends InstanceBase {
 				default: 51326,
 				min: 1,
 				max: 65535,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true',
 			},
 			{
 				type: 'number',
@@ -1659,7 +1651,7 @@ class ModuleInstance extends InstanceBase {
 				default: 33,
 				min: 15,
 				max: 250,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true',
 			},
 			{
 				type: 'number',
@@ -1670,7 +1662,7 @@ class ModuleInstance extends InstanceBase {
 				default: 250,
 				min: 50,
 				max: 1000,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true',
 			},
 			{
 				type: 'number',
@@ -1681,7 +1673,6 @@ class ModuleInstance extends InstanceBase {
 				default: 50,
 				min: 10,
 				max: 250,
-				isVisibleExpression: '$(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'number',
@@ -1692,16 +1683,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 15,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true',
-			},
-			{
-				type: 'checkbox',
-				id: 'showMixLayout',
-				label: 'Show advanced mix layout',
-				tooltip: 'Show dLive manual mix-count fields. iLive AHNet detects its mix layout automatically.',
-				width: 6,
-				default: false,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'static-text',
@@ -1709,7 +1691,7 @@ class ModuleInstance extends InstanceBase {
 				width: 12,
 				label: 'Mix layout',
 				value: 'dLive uses these manual mix counts for bus addressing. iLive AHNet meters detect the mix layout automatically when meters are enabled.',
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1720,7 +1702,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1731,7 +1713,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1742,7 +1724,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1753,7 +1735,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1764,7 +1746,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1775,7 +1757,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1786,7 +1768,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 			{
 				type: 'number',
@@ -1797,7 +1779,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
+				isVisibleExpression: '$(config:model) == "dLive"',
 			},
 		]
 	}
@@ -2037,8 +2019,6 @@ class ModuleInstance extends InstanceBase {
 			model: 'dLive',
 			midiPort: 51325,
 			tcpPort: 51321,
-			showAdvancedSettings: false,
-			showMixLayout: false,
 			midiChannel: 0
 		}
 
@@ -2051,8 +2031,6 @@ class ModuleInstance extends InstanceBase {
 		if (!this.config.ahnetMeterRefreshMs) this.config.ahnetMeterRefreshMs = 33
 		if (!this.config.ahnetVariableRefreshMs) this.config.ahnetVariableRefreshMs = 250
 		if (!this.config.faderUpdateRateMs) this.config.faderUpdateRateMs = 50
-		if (this.config.showAdvancedSettings === undefined) this.config.showAdvancedSettings = false
-		if (this.config.showMixLayout === undefined) this.config.showMixLayout = false
 		if (this.config.midiChannel === undefined) this.config.midiChannel = 0
 		this.fadingWorker.setUpdateRate(Math.min(Math.max(parseInt(this.config.faderUpdateRateMs || 50), 10), 250))
 
