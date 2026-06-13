@@ -24,4 +24,4 @@ iLive AHNet support includes:
 
 - Original dLive module adapted for dLive/iLive by Andrew Broughton in 2020.
 - iLive control functions by Matt Andrewartha.
-- iLive AHNet protocol reverse engineering, meter mapping, and live iLive validation by Adrian Holiday.
+- iLive AHNet protocol reverse engineering, meter mapping, and live iLive validation by Adrian Davis.
