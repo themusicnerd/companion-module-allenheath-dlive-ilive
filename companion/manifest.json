@@ -9,6 +9,10 @@
 	"bugs": "https://github.com/bitfocus/companion-module-allenheath-dlive-ilive/issues",
 	"maintainers": [
 		{
+			"name": "Andrew Broughton",
+			"email": "andy@checkcheckonetwo.com"
+		},
+		{
 			"name": "Jeffrey Davidsz",
 			"email": "jeffrey.davidsz@vicreo.eu"
 		}
