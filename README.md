@@ -5,8 +5,6 @@ See [HELP.md](HELP.md) and [LICENSE](LICENSE) for more information about this mo
 This module for the Allen & Heath dLive and iLive can control parameters of the console
 via MIDI, TCP, and iLive AHNet commands over IP.
 
-iLive functions by Matt Andrewartha
-
 Current Version 2.0.3
 
 ## iLive AHNet support
@@ -21,3 +19,9 @@ iLive AHNet support includes:
 - input channel names and colours
 - automatic iLive mix configuration detection
 - active-page meter subscriptions to reduce load
+
+## Development History
+
+- Original dLive module adapted for dLive/iLive by Andrew Broughton in 2020.
+- iLive control functions by Matt Andrewartha.
+- iLive AHNet protocol reverse engineering, meter mapping, and live iLive validation by Adrian Holiday.
