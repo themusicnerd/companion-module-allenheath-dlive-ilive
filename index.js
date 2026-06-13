@@ -1637,7 +1637,7 @@ class ModuleInstance extends InstanceBase {
 				default: 51324,
 				min: 1,
 				max: 65535,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) && $(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'number',
@@ -1648,7 +1648,7 @@ class ModuleInstance extends InstanceBase {
 				default: 51326,
 				min: 1,
 				max: 65535,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) && $(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'number',
@@ -1659,7 +1659,7 @@ class ModuleInstance extends InstanceBase {
 				default: 33,
 				min: 15,
 				max: 250,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) && $(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'number',
@@ -1670,7 +1670,7 @@ class ModuleInstance extends InstanceBase {
 				default: 250,
 				min: 50,
 				max: 1000,
-				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) && $(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:model) == "iLive" && $(config:enableAhnetMeters) == true && $(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'number',
@@ -1681,7 +1681,7 @@ class ModuleInstance extends InstanceBase {
 				default: 50,
 				min: 10,
 				max: 250,
-				isVisibleExpression: '$(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'number',
@@ -1692,7 +1692,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 15,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'checkbox',
@@ -1701,7 +1701,7 @@ class ModuleInstance extends InstanceBase {
 				tooltip: 'Show dLive manual mix-count fields. iLive AHNet detects its mix layout automatically.',
 				width: 6,
 				default: false,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true',
 			},
 			{
 				type: 'static-text',
@@ -1709,7 +1709,7 @@ class ModuleInstance extends InstanceBase {
 				width: 12,
 				label: 'Mix layout',
 				value: 'dLive uses these manual mix counts for bus addressing. iLive AHNet meters detect the mix layout automatically when meters are enabled.',
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1720,7 +1720,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1731,7 +1731,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1742,7 +1742,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1753,7 +1753,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1764,7 +1764,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1775,7 +1775,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1786,7 +1786,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 			{
 				type: 'number',
@@ -1797,7 +1797,7 @@ class ModuleInstance extends InstanceBase {
 				default: 0,
 				min: 0,
 				max: 64,
-				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) && $(config:showMixLayout)',
+				isVisibleExpression: '$(config:model) == "dLive" && $(config:showAdvancedSettings) == true && $(config:showMixLayout) == true',
 			},
 		]
 	}
