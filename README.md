@@ -24,9 +24,9 @@ The AHNet work is based on live iLive testing and should be treated as a tester 
 
 Early iLive AHNet support includes:
 
-- input Post PreAmp/Trim and Post Limiter/De-Ess meters
+- input Post PreAmp/Trim, Post Gate/PEQ, Post Compressor, Post Limiter/De-Ess, and Post Delay meters
 - input gate, compressor, and limiter gain-reduction meters
-- Aux 1-6 and Main L/R meters
+- Aux 1-6 and Main L/R meters, indexed from the configured iLive mix layout
 - input channel names and colours
 - detected iLive mix configuration variables
 - active-page meter subscriptions to reduce load
